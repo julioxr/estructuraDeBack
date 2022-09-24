@@ -1,36 +1,67 @@
 // requerir los services que hacen las peticiones a la base de datos
 const suscriberService = require("../services/suscribersService");
 
-const getAllSuscribers = async (req, res) => {
+const getAllSuscribers = async (_, res) => {
     try {
-        const suscriber = await Suscriber.find();
-        res.send("algo");
+        const allSuscriber = await suscriberService.getAllSuscribers();
+        res.json(allSuscriber);
     } catch (error) {
         console.log("algo fallo");
     }
 };
 
-const getOneSuscriber = (req, res) => {
+const getOneSuscriber = async (req, res) => {
+    try {
+        const oneSuscriber = await suscriberService.getOneSuscriber(
+            req.params.id
+        );
+        res.send(oneSuscriber);
+    } catch (error) {
+        res.send(error);
+    }
     //hacer peticion a la base de datos
 };
 
-const createOneSuscriber = (req, res) => {
-    const createdSuscriber = suscriberService.createOneSuscriber(req.body);
-
-    res.status(201);
-    res.send({ status: "ok", data: createdSuscriber });
+const createOneSuscriber = async (req, res) => {
     try {
+        const createdSuscriber = await suscriberService.createOneSuscriber(
+            req.body
+        ); // esto controla las peticiones a la base de datos y retorna el objeto creado
+
+        res.status(201);
+        res.send({ status: "ok", data: createdSuscriber });
     } catch (error) {
         console.log(error);
     }
 };
 
-const updateOneSuscriber = (req, res) => {
-    res.send("update one suscriber");
+const updateOneSuscriber = async (req, res) => {
+    try {
+        const {
+            body,
+            params: { id },
+        } = req;
+
+        const updatedSuscriber = await suscriberService.updateOneSuscriber(
+            id,
+            body
+        );
+        res.send(updatedSuscriber);
+    } catch (error) {
+        console.log(error);
+        res.send(error);
+    }
 };
 
-const deleteOneSuscriber = (req, res) => {
-    res.send("delete one suscriber");
+const deleteOneSuscriber = async (req, res) => {
+    try {
+        const deletedSuscriber = await suscriberService.deleteOneSuscriber(
+            req.params.id
+        );
+        res.send(deletedSuscriber);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 module.exports = {

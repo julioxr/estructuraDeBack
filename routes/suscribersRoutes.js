@@ -6,7 +6,7 @@ router
     .get("/", suscriberController.getAllSuscribers)
     .get("/:id", suscriberController.getOneSuscriber)
     .post("/", suscriberController.createOneSuscriber)
-    .patch("/", suscriberController.updateOneSuscriber)
+    .patch("/:id", suscriberController.updateOneSuscriber)
     .delete("/:id", suscriberController.deleteOneSuscriber);
 
 module.exports = router;
