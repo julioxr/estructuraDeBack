@@ -47,6 +47,7 @@ const updateOneSuscriber = async (req, res) => {
             body
         );
         res.send(updatedSuscriber);
+        console.log("canal actualizado");
     } catch (error) {
         console.log(error);
         res.send(error);

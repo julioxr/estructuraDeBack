@@ -1,23 +1,19 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const connection = require("./db/connection");
 const app = express();
 const subscriberRouter = require("./routes/suscribersRoutes");
+const channelRouter = require("./routes/channelRoutes");
 
 require("dotenv").config();
+
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
-
-mongoose
-    .connect(process.env.URIDB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .then(() => console.log("conectado a mongo"))
-    .catch((err) => console.log(err));
+connection(); // conexion a base de datos
 
 app.use("/suscribers", subscriberRouter);
+app.use("/channels", channelRouter);
 
 app.listen(PORT, () => {
-    console.log("server conectado");
+    console.log("server conectado " + PORT);
 });

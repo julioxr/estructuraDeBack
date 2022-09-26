@@ -9,7 +9,7 @@ const suscriberSchema = new Schema({
         type: Number,
         required: true,
     },
-    _suscribedToChannel: [
+    suscribedToChannel: [
         {
             type: Schema.Types.ObjectId,
             ref: "Channel",
